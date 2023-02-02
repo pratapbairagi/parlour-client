@@ -7,7 +7,11 @@ import AppError from "../utils/errorHandler.js";
 export const getAllServices = asyncCatch ( async (req, res, next) => {
     
         const services = await Service.find();
-        res.status(200).json(services)
+        res.status(200).json({
+            success : true,
+            message : "fetched all services successfully !",
+            services
+        })
    
 })
 
@@ -52,7 +56,11 @@ export const getSingleService = asyncCatch(async (req, res, next) => {
     const isServiceExist = await Service.findById(id);
 
     if (isServiceExist) {
-        res.status(200).json(isServiceExist);
+        res.status(200).json({
+            success : true,
+            message : "Fetched sevice successfully !",
+            service : isServiceExist
+        });
     }
     else {
         throw new Error("Service not found !", 404)
@@ -86,7 +94,7 @@ export const editService = async (req, res, next) => {
                 res.status(200).json({
                     success: true,
                     message: "Service updated successfully !",
-                    editedService
+                    service : editedService
                 });
             } else {
                 let editedService = await Service.findByIdAndUpdate(req.body._id, req.body);
@@ -94,7 +102,7 @@ export const editService = async (req, res, next) => {
                 res.status(200).json({
                     success: true,
                     message: "Service updated successfully !",
-                    editedService
+                    service : editedService
                 });
             }
         }
