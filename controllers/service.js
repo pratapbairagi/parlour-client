@@ -63,13 +63,12 @@ export const getSingleService = asyncCatch(async (req, res, next) => {
         });
     }
     else {
-        throw new Error("Service not found !", 404)
+        return next( new AppError("Service not found !", 404) )
     }
 
 })
 
-export const editService = async (req, res, next) => {
-    try {
+export const editService = asyncCatch ( async (req, res, next) => {
         const isServiceExist = await Service.findById(req.body._id);
 
         if (isServiceExist) {
@@ -107,17 +106,12 @@ export const editService = async (req, res, next) => {
             }
         }
         else {
-            throw new Error("Service not found !", 404)
+            return next( new AppError( "Service not found !", 404 ) )
         }
+})
 
+export const deleteService = asyncCatch( async (req, res, next) => {
 
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-
-export const deleteService = async (req, res, next) => {
-    try {
         const isServiceExist = await Service.findById(req.params.id);
 
         if (isServiceExist) {
@@ -131,9 +125,7 @@ export const deleteService = async (req, res, next) => {
             });
         }
         else {
-            throw new Error("The service you are trying to delete is not found !", 404)
+            return  next( new AppError("The service you are trying to delete is not found !", 404))
         }
-    } catch (error) {
-        console.log("error",error)
-    }
-}
+   
+})
