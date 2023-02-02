@@ -78,7 +78,9 @@ export const login = asyncCatch ( async (req, res, next) => {
 
         let options = {
             httpOnly : true,
-            expire : Date.now() + (24 * 60 * 60 * 1000)
+            expires : new Date(Date.now() + (24 * 60 * 60 * 1000)),
+            secure : true,
+            sameSite : "none"
         }
 
        return res.status(200).cookie("jwt", token, options).json({
