@@ -124,7 +124,11 @@ export const deleteService = async (req, res, next) => {
             await cloudinary.uploader.destroy(isServiceExist.images.public_id);
             await Service.findByIdAndDelete(req.params.id);
             const services = await Service.find();
-            res.status(200).json(services);
+            res.status(200).json({
+                success : true,
+                message : "Service deleted successfully !",
+                services
+            });
         }
         else {
             throw new Error("The service you are trying to delete is not found !", 404)
