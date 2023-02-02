@@ -41,7 +41,7 @@ app.use("/", userRouter);
 // })
 
 // middleware for global error
-app.use(AppError, async (err,req,res,next)=>{
+app.use((err,req,res,next)=>{
     err.statusCode = err.statusCode || 500
     err.message = err.message || "Internal server Error"
 
